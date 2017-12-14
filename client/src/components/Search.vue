@@ -36,7 +36,7 @@
               <b-list-group-item>Filler Content</b-list-group-item>
               <b-list-group-item>
                   <b-container fluid class="text-center">
-                      <b-pagination-nav :link-gen="linkGen" :number-of-pages="10" v-model="currentPage" />
+                      <b-pagination-nav :link-gen="linkGen" :number-of-pages="15" v-model="currentPage" />
                   </b-container>
               </b-list-group-item>
           </b-list-group>
