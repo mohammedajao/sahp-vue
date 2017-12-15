@@ -162,17 +162,18 @@
 <script>
 
 window.onscroll = function () {
-  const scrollPosY = window.pageYOffset | document.body.scrollTop;
-  const element = document.getElementById("card-avatar-custom")
-  console.log(element.innerHTML)
-  if(scrollPosY > 30){
-    element.style.position = "fixed"
-    element.style.top = "40px"
-    element.style.left = "40px"
+  const scrollPosY = window.pageYOffset
+  const element = document.getElementById('card-avatar-custom')
+  console.log(window.width)
+
+  if ((scrollPosY > 40) && (window.outerWidth > 1199)) {
+    element.style.position = 'fixed'
+    element.style.top = '40px'
+    element.style.left = '35px'
   } else {
-    element.style.position = "static"
-    element.style.top = "0"
-    element.style.left = "auto"
+    element.style.position = 'relative'
+    element.style.top = 'inherit'
+    element.style.left = 'inherit'
   }
 }
 export default {
@@ -197,6 +198,7 @@ export default {
   background-color: #c0e3e7;
   box-shadow: -3px 3px 20px 0px rgba(0,0,0,0.4);
   padding: 0;
+  margin: 0;
   max-width: 250px;
 }
 
@@ -247,6 +249,7 @@ export default {
 @media(max-width: 1199px) {
   .card-avatar {
     box-shadow: none;
+    max-width: 100%;
   }
   .profile-border-light {
     border: none;
