@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
       slug: '',
       gender: '',
       email: '',
+      name: '',
       employers: [],
       education: [],
       online: false
@@ -17,5 +18,7 @@ export const store = new Vuex.Store({
   },
   mutations: {},
   actions: {},
-  getters: {}
+  getters: {
+    isUserOnline: function (state) { return state.user.online }
+  }
 })

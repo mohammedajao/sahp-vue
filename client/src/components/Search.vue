@@ -46,18 +46,18 @@
 
 <script>
 export default {
-    data () {
-        return {
-            searchInput: '',
-            tabs: [{}],
-            currentPage: 1
-        }
-    },
-    methods: {
-        linkGen (pageNum) {
-            return '#page/' + this.currentPage
-        }
+  data () {
+    return {
+      searchInput: '',
+      tabs: [{}],
+      currentPage: 1
     }
+  },
+  methods: {
+    linkGen (pageNum) {
+      return '#page/' + this.currentPage
+    }
+  }
 }
 </script>
 

@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Muli|Montserrat|Open+Sans|Raleway|Raleway+Dots|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Muli|Montserrat|Open+Sans|Raleway|Raleway+Dots|Roboto|Quicksand');
 
 /* font-family: 'Muli', sans-serif;
 font-family: 'Raleway', sans-serif;

@@ -9,7 +9,7 @@
 
     <!-- We'll use Vuex to decide what to render -->
 
-    <b-navbar-nav>
+    <b-navbar-nav v-if="!this.$store.getters.isUserOnline">
       <b-nav-item v-for="link in menu" :key="link.id" :to="link.path">
         {{ link.title }}
       </b-nav-item>
@@ -18,25 +18,18 @@
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
 
-      <b-nav-form>
+      <b-nav-form v-if="this.$store.getters.isUserOnline">
         <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
         <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
       </b-nav-form>
 
-      <b-nav-form>
+      <b-nav-form v-if="!this.$store.getters.isUserOnline">
         <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Username"/>
         <b-form-input size="sm" class="mr-sm-2" type="password" placeholder="Password"/>
         <b-button size="sm" class="my-2 my-sm-0" type="submit">Login</b-button>
       </b-nav-form>
 
-      <b-nav-item-dropdown text="Lang" right>
-        <b-dropdown-item href="#">EN</b-dropdown-item>
-        <b-dropdown-item href="#">ES</b-dropdown-item>
-        <b-dropdown-item href="#">RU</b-dropdown-item>
-        <b-dropdown-item href="#">FA</b-dropdown-item>
-      </b-nav-item-dropdown>
-
-      <b-nav-item-dropdown right>
+      <b-nav-item-dropdown v-if="this.$store.getters.isUserOnline" right>
         <!-- Using button-content slot -->
         <template slot="button-content">
           <em>User</em>
