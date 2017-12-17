@@ -53,10 +53,14 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  computed: {
+    fetchFeaturedJobs: function () {
+      return this.$store.getters.featuredJobs
+    }
+  },
+  methods: {
+    onLoadJobs (id) {
+      this.$router.push('/jobs/' + id)
     }
   }
 }

@@ -27,6 +27,7 @@
         <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Username"/>
         <b-form-input size="sm" class="mr-sm-2" type="password" placeholder="Password"/>
         <b-button size="sm" class="my-2 my-sm-0" type="submit">Login</b-button>
+        <b-button size="sm" class="my-2 my-sm-0 ml-1" variant="success">Register</b-button>
       </b-nav-form>
 
       <b-nav-item-dropdown v-if="this.$store.getters.isUserOnline" right>
@@ -51,7 +52,7 @@ export default {
     return {
       menu: [
         {id: 1, title: 'Home', path: '/'},
-        {id: 2, title: 'About', path: '/'}
+        {id: 2, title: 'About', path: '/search'}
       ]
     }
   }
