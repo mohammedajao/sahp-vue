@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
+import * as firebase from 'firebase'
 import router from './router'
 import VueFire from 'vuefire'
 import { sync } from 'vuex-router-sync'
@@ -25,5 +26,17 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  created: function () {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyDwTuRlIo_O7XdultgKaxMewJf3H58HTT0',
+      authDomain: 'sahp-966bf.firebaseapp.com',
+      databaseURL: 'https://sahp-966bf.firebaseio.com',
+      projectId: 'sahp-966bf',
+      storageBucket: 'sahp-966bf.appspot.com'
+    })
+
+    this.$store.dispatch('loadJobs')
+    this.$store.dispatch('loadUsers')
+  }
 })

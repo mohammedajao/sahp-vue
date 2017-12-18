@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-show="this.$store.getters.isUserOnline">
     <b-container>
       <b-card class="text-left mt-3">
-        <b-form>
+        <b-form @submit.prevent="submission">
           <b-form-input v-model="file" placeholder="Enter a file url for a logo"></b-form-input>
           <b-img :src="file" width="75" class="m-3"></b-img>
           <!-- <b-form-file id="file_input" v-model="file" choose-label="Attachment Logo"></b-form-file> -->
@@ -102,7 +102,7 @@
                      :max-rows="7">
           </b-form-textarea>
           <pre class="mt-3 mb-3">{{ description }}</pre>
-          <b-button type="submit" @submit.prevent @click="submission" variant="primary">Submit</b-button>
+          <b-button type="submit" variant="primary">Submit</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>
         </b-form>
       </b-card>
@@ -124,13 +124,12 @@ export default {
       deadline: '',
       industry: '',
       file: '',
-      requirements: [],
+      responsibilities: [],
       qualifications: []
     }
   },
   methods: {
-    submission: function (event) {
-      event.preventDefault()
+    submission: function () {
       console.log(this.deadline)
       const bool = this.isNameValid && this.isDescValid && this.isCompanyValid && this.isEmploymentValid && this.isIndustryValid && this.isSeniorityValid
       if (bool) {
@@ -145,7 +144,7 @@ export default {
           deadline: this.deadline,
           image: this.file,
           date: new Date(),
-          requirements: this.requirements,
+          responsibilities: this.responsibilities,
           qualifications: this.qualifications
         }
         this.$store.dispatch('createJob', data)

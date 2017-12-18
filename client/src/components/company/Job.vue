@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-3" fluid>
+  <b-container class="mt-3" fluid v-show="this.$store.getters.isUserOnline">
       <b-container>
           <b-container class="border-light text-left p-3 has-shadow mb-3" fluid>
             <b-row class="mb-2">

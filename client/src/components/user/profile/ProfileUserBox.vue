@@ -38,7 +38,7 @@ export default {
       const scrollPosY = window.pageYOffset
       const element = document.getElementById('card-avatar-custom')
 
-      if ((scrollPosY > 40) && (window.innerWidth > 1199)) {
+      if ((scrollPosY > 40) && (window.innerWidth > 995)) {
         element.style.position = 'fixed'
         element.style.top = '40px'
         element.style.left = '35px'
@@ -70,7 +70,7 @@ export default {
   text-transform: uppercase;
 }
 
-@media(max-width: 1199px) {
+@media(max-width: 995px) {
   .card-avatar {
     box-shadow: none;
     max-width: 100%;

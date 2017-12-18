@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-container fluid v-show="this.$store.getters.isUserOnline">
       <b-nav justified tabs>
         <b-nav-item @click="setFilter('people')">People</b-nav-item>
         <b-nav-item @click="setFilter('job')">Jobs</b-nav-item>
@@ -32,8 +32,8 @@
         <b-container id="listing-container" fluid>
           <search-list-job-item
           v-if="searchType === 'job'" 
-          v-for="(item, index) in this.jobs"
-          :key="item.id"
+          v-for="(item, index) in this.sortedJobs"
+          :key="index"
           :route="'/company/job/' + item.id"
           :divider="true" 
           :logo="item.image" 
@@ -42,6 +42,17 @@
           :location="item.location" 
           :description="item.desc"
           ></search-list-job-item>
+        </b-container>
+        <b-container id="listing-container" fluid>
+          <search-list-user-item v-if="searchType === 'people'"
+          v-for="(item, index) in this.sortedUsers"
+          :key="index"
+          :title="item.name"
+          :url="item.photoURL"
+          :occupation="item.occupation"
+          :slug="item.slug"
+          :divider="true"
+          ></search-list-user-item>
         </b-container>
       </b-container>
   </b-container>
@@ -73,6 +84,31 @@ export default {
   computed: {
     jobs: function () {
       const arr = this.$store.getters.occupations
+      this.results = arr.length
+      return arr
+    },
+    sortedJobs: function () {
+      const arr = this.$store.getters.occupations
+      arr.filter(job => {
+        if (this.searchInput && this.searchInput != '') {
+          return job.title.toUpperCase().indexOf(this.searchInput.toUpperCase()) > -1
+        } else {
+          return true
+        }
+      })
+      this.results = arr.length
+      return arr
+    },
+    sortedUsers: function () {
+       const arr = this.$store.getters.userList
+       console.log("sasd")
+       arr.filter(account => {
+        if (this.searchInput && this.searchInput != '') {
+          return account.name.toUpperCase().indexOf(this.searchInput.toUpperCase()) > -1
+        } else {
+          return true
+        }
+      })
       this.results = arr.length
       return arr
     }

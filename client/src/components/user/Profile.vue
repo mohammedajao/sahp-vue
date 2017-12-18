@@ -1,12 +1,12 @@
 <template>
-  <b-container class="profile-container" fluid>
+  <b-container class="profile-container" fluid v-show="this.$store.getters.isUserOnline">
     <b-row>
-      <user-box username="Ola Louis" occupation="Designer" url="https://lorempixel.com/125/125/technics/8/"></user-box>
+      <user-box :username="this.user.name" :occupation="this.user.occupation" :url="this.user.photoURL"></user-box>
       <b-col class="p-0-custom">
         <b-container class="profile-border-light p-4" fluid>
           <b-container class="text-left">
-            <h2 class="profile-heading-bolden-caps text-left mb-5">Hello, I'm Ola Lowe!</h2>
-            <p>I am a talanted Freelance Graphic Designer and Illustrator. I design websites, logos, brochures, banners, book covers, and everything related to design and inspiration. I have graduated from International University of Design. Some of my works featured on international exhibition of design.</p>
+            <h2 class="profile-heading-bolden-caps text-left mb-5">Hello, I'm {{ this.user.name }}</h2>
+            <p>I am a talanted Freelance Graphic Designer and Illustrator. I design websites, logos, brochures, banners, book covers, and everything related to design and inspiration. I have graduated from International High School of Design. Some of my works featured on international exhibition of design.</p>
             <b-button variant="outline-primary" rounded>Share</b-button>
             <hr>
           </b-container>
@@ -57,7 +57,7 @@ export default {
   data () {
     return {
       userData: [
-        {title: 'Full Name', text: 'Ola Lowe'},
+        {title: 'Full Name', text: 'John Doe'},
         {title: 'D.O.B', text: '09 06 2000'},
         {title: 'Address', text: '280 Peasant Ave'},
         {title: 'E-mail', text: 'olalowe@gmail.com'},
@@ -69,6 +69,11 @@ export default {
         {'title': 'SAT ERW', 'text': '680'},
         {'title': 'ACT', 'text': '32'}
       ]
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters.getUser
     }
   },
   components: {

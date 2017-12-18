@@ -1,5 +1,5 @@
 <template>
-<div class="h-100">
+<div class="h-100" v-show="this.$store.getters.isUserOnline">
   <b-jumbotron class="company-wallpaper h-25 pb-0 mb-0"></b-jumbotron>
   <b-container class="text-center">
       <b-container class="mb-3 comp-container">

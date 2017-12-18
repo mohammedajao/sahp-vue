@@ -47,6 +47,16 @@ export default new Router({
       path: '/company/createjob',
       name: 'JobCreate',
       component: JobCreation
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }
   ],
   mode: 'history'

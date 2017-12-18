@@ -13,8 +13,7 @@
       It uses utility classes for typography and spacing to space content
       out within the larger container.
     </p>
-    <b-btn variant="primary" href="#">Register</b-btn>
-    <b-btn variant="success" href="#">Login</b-btn>
+    <b-btn variant="primary" to="/register" v-if="!this.$store.getters.isUserOnline">Register</b-btn>
   </b-jumbotron>
 
   <!-- jumbotron-2.vue -->
