@@ -48,6 +48,7 @@
           v-for="(item, index) in this.sortedUsers"
           :key="index"
           :title="item.name"
+          :route="'/profile/' + item.id"
           :url="item.photoURL"
           :occupation="item.occupation"
           :slug="item.slug"
@@ -101,9 +102,8 @@ export default {
     },
     sortedUsers: function () {
        const arr = this.$store.getters.userList
-       console.log("sasd")
        arr.filter(account => {
-        if (this.searchInput && this.searchInput != '') {
+        if ( this.searchInput && this.searchInput != '') {
           return account.name.toUpperCase().indexOf(this.searchInput.toUpperCase()) > -1
         } else {
           return true

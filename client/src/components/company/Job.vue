@@ -13,8 +13,8 @@
                     </b-row>
                 </b-col>
             </b-row>
-            <b-button variant="outline-primary">Save</b-button>
-            <b-button variant="primary">Apply Online</b-button>
+            <b-button variant="primary" @click="apply" v-if="this.canApply">Apply Online</b-button>
+            <b-button v-if="!this.canApply" disabled>Awaiting Response</b-button>
           </b-container>
           <b-container class="border-light text-left p-3 has-shadow mb-3">
               <b-row class="job-description">
@@ -50,14 +50,25 @@ export default {
     return {}
   },
   props: ['id'],
+  methods: {
+    apply () {
+      this.$store.dispatch('addUserJob', {jobs: [this.id]})
+    }
+  },
   computed: {
     job: function () {
       const info = this.$store.getters.loadJob(this.id)
-      Object.keys(info).map((prop) => {
+      Object.keys(info).map(prop => {
         this[prop] = info[prop]
       })
       console.log(this)
       return info
+    },
+    user: function () {
+      return this.$store.getters.loadUser
+    },
+    canApply: function () {
+      return !this.$store.getters.getUser.jobs.find(job => this.id === job)
     }
   },
   created: function () {
@@ -68,11 +79,11 @@ export default {
 
 <style>
 .has-shadow {
-    box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
-
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 
 .border-light {
-    border: 1px rgb(225, 225, 225) solid;
+  border: 1px rgb(225, 225, 225) solid;
 }
 </style>

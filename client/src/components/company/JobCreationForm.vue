@@ -1,5 +1,5 @@
 <template>
-  <div v-show="this.$store.getters.isUserOnline">
+  <div v-show="this.$store.getters.isUserOnline && this.$store.getters.loadUser.accountType != 'Student'">
     <b-container>
       <b-card class="text-left mt-3">
         <b-form @submit.prevent="submission">
@@ -170,7 +170,7 @@ export default {
     invalidDesc: function () {
       if (this.description.length > 50) {
         return ''
-      } else if (this.title.lenght > 0) {
+      } else if (this.title.length > 0) {
         return 'Please enter a description of at least 50 characters'
       } else {
         return 'This field is required.'

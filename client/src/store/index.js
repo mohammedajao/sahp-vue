@@ -14,7 +14,7 @@ export const store = new Vuex.Store({
       name: '',
       employers: [],
       education: [],
-      jobs: ['1'],
+      jobs: [],
       online: false
     },
     users: [],
@@ -42,6 +42,8 @@ export const store = new Vuex.Store({
     },
     setLoadedUsers: function (state, payload) {
       state.users = payload
+      console.log("set users")
+      console.log(state.users[0])
     },
     createJob: function (state, payload) {
       state.occupations.push(payload)
@@ -86,7 +88,7 @@ export const store = new Vuex.Store({
           const obj = data.val()
           for (let key in obj) {
             users.push({
-              id: obj[key].uid,
+              id: obj[key].id,
               slug: obj[key].slug || '',
               gender: obj[key].gender || '',
               email: obj[key].email,
@@ -95,9 +97,14 @@ export const store = new Vuex.Store({
               employers: obj[key].employers || [],
               occupation: obj[key].occupation || 'Student',
               education: obj[key].education || [],
-              jobs: obj[key].jobs || ['1'],
+              jobs: obj[key].jobs || [],
               desc: obj[key].desc || '',
-              testScores: obj[key].testScores || []
+              testScores: obj[key].testScores || [],
+              dob: obj[key].dob || '',
+              school: obj[key].school || '',
+              languages: obj[key].languages || [],
+              skills: obj[key].skills || [],
+              number: obj[key].number || '',
             })
           }
           commit('setLoadedUsers', users)
@@ -147,18 +154,44 @@ export const store = new Vuex.Store({
             employers: user.employers || [],
             occupation: user.occupation || 'Student',
             education: user.education || [],
-            jobs: user.jobs || ['1'],
+            jobs: user.jobs || [],
             desc: user.desc || '',
+            accountType: payload.accountType || 'Student',
             testScores: user.testScores || [],
+            testScores: user.testScores || [],
+            dob: user.dob || '',
+            school: user.school || '',
+            languages: user.languages || [],
+            skills: user.skills || [],
+            number: user.number || '',
             online: true
           }
-          firebase.database().ref('users').push(newUser)
+          firebase.database().ref('users/' + user.uid).set(newUser)
           commit('setUser', newUser)
         }
       })
       .catch(error => {
         console.log(error)
       })
+    },
+    updateUser: function ({commit}, payload) {
+      const user = firebase.auth().currentUser
+      const newUser = {
+        id: user.uid,
+        slug: user.slug || '',
+        gender: user.gender || '',
+        email: user.email,
+        desc: user.desc || '',
+        occupation: user.occupation || 'Student',
+        accountType: user.accountType || 'Student',
+        photoURL: user.photoURL || 'https://lorempixel.com/125/125/technics/8/',
+        employers: user.employers || [],
+        education: user.education || [],
+        ...payload,
+        online: true
+      }
+      firebase.database().ref('users').child(user.uid).update(newUser)
+      commit('setUser', newUser)
     },
     loginUser: function ({commit}, payload) {
       if (payload != null) {
@@ -169,12 +202,18 @@ export const store = new Vuex.Store({
           email: payload.email,
           desc: payload.desc || '',
           occupation: payload.occupation || 'Student',
+          accountType: payload.accountType || 'Student',
           name: payload.displayName || 'John Doe',
           photoURL: payload.photoURL || 'https://lorempixel.com/125/125/technics/8/',
           employers: payload.employers || [],
           education: payload.education || [],
           testScores: payload.testScores || [],
-          jobs: payload.jobs || ['1'],
+          dob: payload.dob || '',
+          school: payload.school || '',
+          languages: payload.languages || [],
+          skills: payload.skills || [],
+          number: payload.number || '',
+          jobs: payload.jobs || [],
           online: true
         }
         commit('setUser', newUser)
@@ -182,6 +221,36 @@ export const store = new Vuex.Store({
     },
     signOut: function ({commit}, payload) {
       commit('setUser', {online: false})
+    },
+    addUserJob: function ({commit}, payload) {
+      const user = firebase.auth().currentUser
+      const newUser = {
+        id: user.uid,
+        slug: user.slug || '',
+        gender: user.gender || '',
+        email: user.email,
+        name: user.displayName || 'John Doe',
+        photoURL: user.photoURL || 'https://lorempixel.com/125/125/technics/8/',
+        employers: user.employers || [],
+        occupation: user.occupation || 'Student',
+        education: user.education || [],
+        accountType: user.accountType || 'Student',
+        jobs: user.jobs || [],
+        desc: user.desc || '',
+        testScores: user.testScores || [],
+        testScores: user.testScores || [],
+        dob: user.dob || '',
+        school: user.school || '',
+        languages: user.languages || [],
+        skills: user.skills || [],
+        number: user.number || '',
+        online: true
+      }
+      for (let key in payload) {
+        newUser.jobs.push(payload[key][0])
+      }
+      firebase.database().ref('users').child(user.uid).update(newUser)
+      commit('setUser', newUser)
     }
   },
   getters: {
@@ -191,7 +260,9 @@ export const store = new Vuex.Store({
       })
     },
     userList: function (state) {
-      return state.users
+      return state.users.sort((userA, userB) => {
+        return userA.id > userB.id
+      })
     },
     isUserOnline: function (state) { return state.user.online },
     getUser: function (state) { return state.user },
@@ -200,6 +271,14 @@ export const store = new Vuex.Store({
       return (jobId) => {
         return state.occupations.find((job) => {
           return job.id === jobId
+        })
+      }
+    },
+    getUsahs (state) { return state.users },
+    loadUser: function (state) {
+      return (uid) => {
+        return state.users.find((user) => {
+          return uid == user.id
         })
       }
     }

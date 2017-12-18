@@ -41,7 +41,7 @@
         <template slot="button-content">
           <em>User</em>
         </template>
-        <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+        <b-dropdown-item :to="'/profile/'+this.$store.getters.getUser.id">Profile</b-dropdown-item>
         <b-dropdown-item @click="onSignout">Signout</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -66,7 +66,8 @@ export default {
       ],
       userMenu: [
         {id: 1, title: 'Home', path: '/'},
-        {id: 2, title: 'Search', path: '/search'}
+        {id: 2, title: 'Search', path: '/search'},
+        {id: 3, title: 'Create Job', path:'/company/createjob'}
       ]
     }
   },

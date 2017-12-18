@@ -41,8 +41,8 @@
                 </b-form-group>
                 <b-form-checkbox id="checkbox1"
                      v-model="student"
-                     :value="Student"
-                     :unchecked-value="Employer"
+                     value="Student"
+                     unchecked-value="Employer"
                      required>
                   I am a student.
                 </b-form-checkbox>
@@ -62,7 +62,7 @@ export default {
       email: '',
       password: '',
       confirmedPassword: '',
-      student: ''
+      student: 'Employer'
     }
   },
   methods: {

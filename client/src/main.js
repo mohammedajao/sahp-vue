@@ -35,7 +35,6 @@ new Vue({
       projectId: 'sahp-966bf',
       storageBucket: 'sahp-966bf.appspot.com'
     })
-
     this.$store.dispatch('loadJobs')
     this.$store.dispatch('loadUsers')
   }

@@ -6,20 +6,55 @@
         <b-container class="profile-border-light p-4" fluid>
           <b-container class="text-left">
             <h2 class="profile-heading-bolden-caps text-left mb-5">Hello, I'm {{ this.user.name }}</h2>
-            <p>I am a talanted Freelance Graphic Designer and Illustrator. I design websites, logos, brochures, banners, book covers, and everything related to design and inspiration. I have graduated from International High School of Design. Some of my works featured on international exhibition of design.</p>
+            <p>{{ this.desc }}</p>
             <b-button variant="outline-primary" rounded>Share</b-button>
+            <b-button v-if="this.id == this.$store.getters.getUser.id" to="/editprofile" rounded>Edit Profile</b-button>
             <hr>
           </b-container>
           <b-container class="text-left">
             <b-row>
             <b-col>
               <h3 class="text-muted-custom title-thin mb-5">personal information</h3>
-              <user-list :list="this.userData"></user-list>
+              <dl class="text-left">
+                <b-row style="max-width: 300px;" >
+                  <b-col md="6">
+                    <dt>Full Name</dt>
+                  </b-col>
+                  <b-col md="6">
+                    <dd>{{ this.name }}</dd>
+                  </b-col>
+                </b-row>
+                <b-row style="max-width: 300px;" >
+                  <b-col md="6">
+                    <dt>D.O.B.</dt>
+                  </b-col>
+                  <b-col md="6">
+                    <dd>{{ this.dob }}</dd>
+                  </b-col>
+                </b-row>
+                <b-row style="max-width: 300px;" >
+                  <b-col md="6">
+                    <dt>E-mail</dt>
+                  </b-col>
+                  <b-col md="6">
+                    <dd>{{ this.email }}</dd>
+                  </b-col>
+                </b-row>
+                <b-row style="max-width: 300px;" >
+                  <b-col md="6">
+                    <dt>Mobile</dt>
+                  </b-col>
+                  <b-col md="6">
+                    <dd>{{ this.number }}</dd>
+                  </b-col>
+                </b-row>
+              </dl>
             </b-col>
             <b-col>
               <h3 class="text-muted-custom title-thin mb-5">languages</h3>
-                <skill-bullets title="English" tag="native" :filled="8"></skill-bullets>
-                <skill-bullets title="Spanish" tag="fluent" :filled="6"></skill-bullets>
+                <div v-for="(item, index) in languages" :key="index">
+                  <skill-bullets :title="item.name" :tag="item.fluency" :filled="item.level"></skill-bullets>
+                </div>
             </b-col>
             </b-row>
             <hr>
@@ -29,6 +64,9 @@
            <b-row>
              <b-col>
                <h3 class="text-muted-custom title-thin mb-5">professional skills</h3>
+               <span v-for="(item, index) in skills" :key="index">
+                 <b-badge>{{ item }}</b-badge>
+               </span>
              </b-col>
            </b-row>
            <hr>
@@ -55,25 +93,17 @@ import SkillBullets from '@/components/user/profile/ProfileUserSkillBullet.vue'
 
 export default {
   data () {
-    return {
-      userData: [
-        {title: 'Full Name', text: 'John Doe'},
-        {title: 'D.O.B', text: '09 06 2000'},
-        {title: 'Address', text: '280 Peasant Ave'},
-        {title: 'E-mail', text: 'olalowe@gmail.com'},
-        {title: 'Mobile', text: '+1 999 999 9999'}
-      ],
-      testScores: [
-        {'title': 'SAT', 'text': '1520'},
-        {'title': 'SAT Math', 'text': '740'},
-        {'title': 'SAT ERW', 'text': '680'},
-        {'title': 'ACT', 'text': '32'}
-      ]
-    }
+    return {}
   },
+  props: ['id'],
   computed: {
     user () {
-      return this.$store.getters.getUser
+      const info = this.$store.getters.loadUser(this.id)
+      console.log(info)
+      Object.keys(info).map((prop) => {
+        this[prop] = info[prop]
+      })
+      return info
     }
   },
   components: {

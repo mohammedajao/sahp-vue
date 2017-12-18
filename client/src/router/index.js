@@ -8,6 +8,7 @@ import Search from '@/components/Search'
 import Company from '@/components/Company'
 import Job from '@/components/company/Job'
 import JobCreation from '@/components/company/JobCreationForm'
+import ProfileEdit from '@/components/user/ProfileEdit'
 // import BootstrapVue from 'bootstrap-vue'
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -23,7 +24,8 @@ export default new Router({
       component: Home
     },
     {
-      path: '/profile',
+      path: '/profile/:id',
+      props: true,
       name: 'Profile',
       component: Profile
     },
@@ -57,6 +59,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/editprofile',
+      name: 'ProfileEditor',
+      component: ProfileEdit
     }
   ],
   mode: 'history'
