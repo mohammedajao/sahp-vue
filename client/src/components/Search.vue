@@ -89,8 +89,7 @@ export default {
       return arr
     },
     sortedJobs: function () {
-      const arr = this.$store.getters.occupations
-      arr.filter(job => {
+      const arr = this.$store.getters.occupations.filter(job => {
         if (this.searchInput && this.searchInput != '') {
           return job.title.toUpperCase().indexOf(this.searchInput.toUpperCase()) > -1
         } else {
@@ -101,8 +100,7 @@ export default {
       return arr
     },
     sortedUsers: function () {
-       const arr = this.$store.getters.userList
-       arr.filter(account => {
+       const arr = this.$store.getters.userList.filter(account => {
         if ( this.searchInput && this.searchInput != '') {
           return account.name.toUpperCase().indexOf(this.searchInput.toUpperCase()) > -1
         } else {
